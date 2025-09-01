@@ -1,3 +1,6 @@
+
+# pip install -r requirements.txt
+
 from flask import Flask
 
 app = Flask(__name__)
