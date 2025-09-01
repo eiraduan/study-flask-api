@@ -8,10 +8,12 @@ app = Flask(__name__)
 tasks = []  # Lista para armazenar as tarefas
 task_id_control = 1  # Controlador de IDs para garantir unicidade
 
+#página principal
 @app.route("/")
 def hello():
     return "Hello, World!"
 
+#adicionar 1 na lista (CREATE)
 @app.route("/tasks", methods=["POST"])
 def create_task():
     global task_id_control
@@ -25,6 +27,20 @@ def create_task():
     tasks.append(new_task)  # Adiciona a nova tarefa à lista
     task_id_control += 1  # Incrementa o ID para a próxima tarefa
     return jsonify({"message": "Tarefa criada com sucesso!", "task": new_task}), 201
+
+#lista todos (READ)
+@app.route("/tasks", methods=["GET"])
+def get_tasks():
+    return jsonify({"tasks": tasks, "total": len(tasks)})
+
+#lista um item pelo ID (READ)
+@app.route("/tasks/<int:task_id>", methods=["GET"])
+def get_task(task_id):
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"message":"Tarefa não encontrada"}), 404
+    return jsonify(task)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
