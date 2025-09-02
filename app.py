@@ -1,11 +1,35 @@
 # pip install -r requirements.txt
+# http POST http://localhost:5000/tasks title="Aprender Flask" description="Estudar a criação de APIs"
 from flask import Flask
 from flask import request, jsonify
 
 app = Flask(__name__)
 
+'''
+# exemplo de ja ter uma lista de tarefas já pre definida
+tasks = [
+    {
+        "title": "Aprender Flask e APIs 11111111",
+        "description": "Aprofundar nos conceitos 1111111111",
+        "id": 1,
+        "completed": True
+    },
+    {
+        "title": "Aprender Flask e APIs 222222222",
+        "description": "Aprofundar nos conceitos 222222222",
+        "id": 2,
+        "completed": True
+    },
+    {
+        "title": "Aprender Flask e APIs 333333333333",
+        "description": "Aprofundar nos conceitos 3333333333",
+        "id": 3,
+        "completed": False
+    },
+]  
+'''
 
-tasks = []  # Lista para armazenar as tarefas
+tasks = []# Lista para armazenar as tarefas
 task_id_control = 1  # Controlador de IDs para garantir unicidade
 
 #página principal
