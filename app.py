@@ -41,6 +41,7 @@ def get_task(task_id):
         return jsonify({"message":"Tarefa não encontrada"}), 404
     return jsonify(task)
 
+#atualiza um item pelo ID (UPDATE)
 @app.route("/tasks/<int:task_id>", methods=["PUT"])
 def update_task(task_id):
     task = next((t for t in tasks if t["id"] == task_id), None)
@@ -52,5 +53,15 @@ def update_task(task_id):
     task["description"] = data.get("description", task["description"])
     task["completed"] = data.get("completed", task["completed"])
     return jsonify({"message": "Tarefa atualizada com sucesso!", "task": task})
+
+@app.route("/tasks/<int:task_id>", methods=["DELETE"])
+def delete_task(task_id):
+    global tasks
+    task = next ((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"message": "Tarefa não encontrada"}), 404
+    tasks = [t for t in tasks if t["id"] != task_id]
+    return jsonify({"message": "Tarefa deletada com sucesso!"})
+
 if __name__ == "__main__":
     app.run(debug=True)
